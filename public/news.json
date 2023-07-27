@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "image": "https://www.commonsensemedia.org/sites/default/files/styles/ratio_16_9_large/public/blog/breaking-news-blog-1138x658-1.jpg",
+    "title": "Lorem Ipsum Dolor Sit Amet",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et turpis eget sapien vulputate fermentum."
+  },
+  {
+    "id": "2",
+    "image": "https://media.gettyimages.com/id/1289018115/photo/female-anchor-presenting-breaking-news-about-severe-weather-causing-power-outage.jpg?s=612x612&w=gi&k=20&c=uSD-HSZhWuEb4Y5b7Xdr2uFByap0NjZ9CTOJJyQZytk=",
+    "title": "Praesent Non Ullamcorper Justo",
+    "description": "Praesent non ullamcorper justo. Vivamus id interdum neque, vitae lobortis quam. Fusce euismod ex ut nisl luctus, eu rhoncus mauris vestibulum."
+  },
+  {
+    "id": "3",
+    "image": "https://i.ytimg.com/vi/UrKfUJsWZQY/maxresdefault.jpg",
+    "title": "Aenean Condimentum Egestas Tortor",
+    "description": "Aenean condimentum egestas tortor, non maximus tellus gravida in. Vestibulum in turpis arcu."
+  }
+]
