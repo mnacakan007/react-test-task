@@ -1,28 +1,25 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Button, Layout, Modal, Row} from "antd";
-import NewsForm from "../components/NewsForm";
+import NewsForm from "./NewsForm";
 import {useActions} from "../hooks/useActions";
-import {useTypedSelector} from "../hooks/useTypedSelector";
 import {INews} from "../models/INews";
 
-const Event: FC = () => {
+const AddNews: FC = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    // const {f, createEvent} = useActions();
-    const {user} = useTypedSelector(state => state.auth);
+    const {fetchNews, createNews} = useActions();
 
-    useEffect(() => {
-        // fetchGuests()
-        // fetchEvents(user.username);
-    }, [])
+    // useEffect(() => {
+    //     fetchNews();
+    // }, [])
 
-    const addNewEvent = (event: INews) => {
+    const addNews = (news: INews) => {
         setModalVisible(false);
-        // createEvent(event);
+        createNews(news);
     }
 
     return (
         <Layout>
-            <Row justify="center">
+            <Row justify="end">
                 <Button
                     onClick={() => setModalVisible(true)}
                 >
@@ -30,17 +27,17 @@ const Event: FC = () => {
                 </Button>
             </Row>
             <Modal
-                title="Добавить событие"
+                title="Add news"
                 visible={modalVisible}
                 footer={null}
                 onCancel={() => setModalVisible(false)}
             >
                 <NewsForm
-                    submit={addNewEvent}
+                    submit={addNews}
                 />
             </Modal>
         </Layout>
     );
 };
 
-export default Event;
+export default AddNews;

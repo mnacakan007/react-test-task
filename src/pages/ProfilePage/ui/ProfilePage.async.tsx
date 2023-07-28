@@ -2,6 +2,6 @@ import {lazy} from "react";
 
 export const ProfilePageAsync = lazy(() => new Promise(resolve => {
     // @ts-ignore
-    // ТАК В РЕАЛЬНЫХ ПРОЕКТАХ НЕ ДЕЛАТЬ!!!!! ДЕЛАЕМ ДЛЯ КУРСА!
+    // For testing lazy (temp code)
     setTimeout(() => resolve(import('./ProfilePage')), 1500)
 }));

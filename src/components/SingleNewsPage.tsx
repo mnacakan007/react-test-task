@@ -10,11 +10,11 @@ interface NewsListProps {
 
 const SingleNewsPage: FC<NewsListProps> = ({ news }) => {
     return (
-        <Col span={8}>
+        <Col className="gutter-row" span={6}>
             <Card
                 key={news.id}
                 hoverable
-                style={{ width: 240 }}
+                style={{marginBottom: '20px'}}
                 cover={<img alt="example" src={news.image} />}
             >
                 <Meta title={news.title} description={news.description} />

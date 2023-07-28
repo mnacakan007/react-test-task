@@ -7,13 +7,17 @@ import NewsService from "../../../api/Newservice";
 export const NewsActionCreators = {
     setNews: (payload: INews[]): SetNewsAction => ({type: NewsActionEnum.SET_NEWS, payload}),
     setIsLoading: (payload: boolean): SetIsLoadingAction => ({type: NewsActionEnum.SET_IS_LOADING, payload}),
-    createNews: (event: INews) =>  async (dispatch: AppDispatch) => {
+    createNews: (news: INews) =>  async (dispatch: AppDispatch) => {
         try {
-            const events = localStorage.getItem("events") || '[]'
-            const json = JSON.parse(events) as INews[];
-            json.push(event);
-            dispatch(NewsActionCreators.setNews(json));
-            localStorage.setItem('events', JSON.stringify(json));
+            const response = await NewsService.getNews();
+            const mockNews = response.data;
+            console.log(news);
+            await NewsService.addNews(news);
+            const r = await NewsService.getNews();
+            const m = r.data;
+            console.log(m);
+            mockNews.push(news);
+            dispatch(NewsActionCreators.setNews(mockNews));
         } catch (e) {
             console.log(e)
         }
@@ -21,12 +25,13 @@ export const NewsActionCreators = {
     fetchNews: () => async (dispatch: AppDispatch) => {
         try {
             dispatch(NewsActionCreators.setIsLoading(true));
+
             setTimeout(async () => {
                 const response = await NewsService.getNews();
-                const mockUser = response.data;
+                const mockNews = response.data;
 
-                if (mockUser) {
-                    dispatch(NewsActionCreators.setNews(mockUser));
+                if (mockNews) {
+                    dispatch(NewsActionCreators.setNews(mockNews));
                 }
 
                 dispatch(NewsActionCreators.setIsLoading(false));

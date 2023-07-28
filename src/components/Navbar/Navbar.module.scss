@@ -1,0 +1,10 @@
+.menuMain {
+  height: 64px;
+
+  .ant-menu-inline >.ant-menu-item,
+  .ant-menu-vertical >.ant-menu-item,
+  .ant-menu-inline >.ant-menu-submenu>.ant-menu-submenu-title,
+  .ant-menu-vertical >.ant-menu-submenu>.ant-menu-submenu-title {
+    height: 64px;
+  }
+}
