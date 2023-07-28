@@ -2,23 +2,18 @@ import React, {FC, useEffect} from 'react';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useActions} from "../../../hooks/useActions";
 import {Row} from "antd";
-import SingleNewsPage from "../../../components/SingleNewsPage";
+import SingleNewsPage from "../../../components/SingleNewsPage/ui/SingleNewsPage";
 import {INews} from "../../../models/INews";
 import styles from "./NewsPage.module.scss";
-import AddNews from "../../../components/AddNews";
+import AddNews from "../../../components/AddNews/ui/AddNews";
 
 const NewsPage: FC = () => {
     const {isLoading, news: data} = useTypedSelector(state => state.news);
     const {fetchNews} = useActions()
 
     useEffect(() => {
-        fetchNews()
+        fetchNews();
     }, []);
-
-    useEffect(() => {
-        console.log(isLoading);
-        console.log(data);
-    }, [data, isLoading]);
 
     return (
         <>

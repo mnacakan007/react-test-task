@@ -1,32 +1,10 @@
-import React, {FC, Suspense, useEffect} from 'react';
+import React, {FC, Suspense} from 'react';
 import AppRouter from "./components/AppRouter";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar/ui/Navbar";
 import {Layout} from "antd";
-import './App.css';
-import {useActions} from "./hooks/useActions";
-import {IUser} from "./models/IUser";
-import {RouteNames} from "./shared/config/routeConfig/routeConfig";
-import {useTypedSelector} from "./hooks/useTypedSelector";
-import {useNavigate} from "react-router-dom";
+import './App.scss';
 
 const App: FC = () => {
-    const {isAuth} = useTypedSelector(state => state.auth);
-    const {setUser, setIsAuth} = useActions();
-    let navigate = useNavigate();
-
-    useEffect(() => {
-        if (localStorage.getItem('auth')) {
-            setUser({username: localStorage.getItem('username' || '')} as IUser)
-            setIsAuth(true);
-        }
-    }, [])
-
-    useEffect(() => {
-        if (isAuth) {
-            navigate(RouteNames.PROFILE_LINK);
-        }
-    }, [isAuth]);
-
     return (
         <Layout className="h100">
             <Navbar/>

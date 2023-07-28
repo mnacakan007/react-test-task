@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Layout, Row} from "antd";
-import LoginForm from "../../../components/LoginForm";
+import LoginForm from "../../../components/LoginForm/ui/LoginForm";
 
 const LoginPage = () => {
     return (

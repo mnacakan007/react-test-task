@@ -1,18 +1,18 @@
 import React, {FC} from 'react';
 import {Layout, Menu, Row} from "antd";
 import {useNavigate} from 'react-router-dom';
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useActions} from "../../hooks/useActions";
-import {RouteNames} from "../../shared/config/routeConfig/routeConfig";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import {useActions} from "../../../hooks/useActions";
+import {RouteNames} from "../../../shared/config/routeConfig/routeConfig";
 import Avatar from 'antd/es/avatar/avatar';
 import {UserOutlined} from "@ant-design/icons";
-import style from './Navbar.module.scss';
+import styles from './Navbar.module.scss';
 
 const Navbar: FC = () => {
     const navigate = useNavigate();
     const {isAuth, user} = useTypedSelector(state => state.auth);
     const {logout} = useActions()
-    console.log(style);
+
     return (
         <Layout.Header>
             <Row justify="end">

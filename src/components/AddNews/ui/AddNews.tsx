@@ -1,19 +1,15 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Button, Layout, Modal, Row} from "antd";
-import NewsForm from "./NewsForm";
-import {useActions} from "../hooks/useActions";
-import {INews} from "../models/INews";
+import NewsForm from "../../NewsForm/ui/NewsForm";
+import {useActions} from "../../../hooks/useActions";
+import {INews} from "../../../models/INews";
 
 const AddNews: FC = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const {fetchNews, createNews} = useActions();
-
-    // useEffect(() => {
-    //     fetchNews();
-    // }, [])
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const {createNews} = useActions();
 
     const addNews = (news: INews) => {
-        setModalVisible(false);
+        setIsModalOpen(false);
         createNews(news);
     }
 
@@ -21,16 +17,16 @@ const AddNews: FC = () => {
         <Layout>
             <Row justify="end">
                 <Button
-                    onClick={() => setModalVisible(true)}
+                    onClick={() => setIsModalOpen(true)}
                 >
                     Add event
                 </Button>
             </Row>
             <Modal
                 title="Add news"
-                visible={modalVisible}
+                open={isModalOpen}
                 footer={null}
-                onCancel={() => setModalVisible(false)}
+                onCancel={() => setIsModalOpen(false)}
             >
                 <NewsForm
                     submit={addNews}

@@ -1,5 +1,5 @@
 import {LoginPageAsync} from "./ui/LoginPage.async";
 
 export {
-    LoginPageAsync as NewsPage
+    LoginPageAsync as LoginPage
 };

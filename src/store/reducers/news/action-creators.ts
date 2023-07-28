@@ -8,19 +8,19 @@ export const NewsActionCreators = {
     setNews: (payload: INews[]): SetNewsAction => ({type: NewsActionEnum.SET_NEWS, payload}),
     setIsLoading: (payload: boolean): SetIsLoadingAction => ({type: NewsActionEnum.SET_IS_LOADING, payload}),
     createNews: (news: INews) =>  async (dispatch: AppDispatch) => {
-        try {
-            const response = await NewsService.getNews();
-            const mockNews = response.data;
-            console.log(news);
-            await NewsService.addNews(news);
-            const r = await NewsService.getNews();
-            const m = r.data;
-            console.log(m);
-            mockNews.push(news);
-            dispatch(NewsActionCreators.setNews(mockNews));
-        } catch (e) {
-            console.log(e)
-        }
+            try {
+                dispatch(NewsActionCreators.setIsLoading(true));
+
+                await NewsService.addNews(news);
+                const updatedNews = await NewsService.getNews();
+                const updatedMockNews = updatedNews.data;
+
+                dispatch(NewsActionCreators.setNews(updatedMockNews));
+                dispatch(NewsActionCreators.setIsLoading(false));
+            } catch (e) {
+                console.log(e)
+                dispatch(NewsActionCreators.setIsLoading(false));
+            }
     },
     fetchNews: () => async (dispatch: AppDispatch) => {
         try {
@@ -36,6 +36,21 @@ export const NewsActionCreators = {
 
                 dispatch(NewsActionCreators.setIsLoading(false));
             }, 1000)
+        } catch (e) {
+            console.log(e)
+            dispatch(NewsActionCreators.setIsLoading(false));
+        }
+    },
+    deleteNews: (id: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(NewsActionCreators.setIsLoading(true));
+
+            await NewsService.deleteNews(id);
+            const updatedNews = await NewsService.getNews();
+            const updatedMockNews = updatedNews.data;
+
+            dispatch(NewsActionCreators.setNews(updatedMockNews));
+            dispatch(NewsActionCreators.setIsLoading(false));
         } catch (e) {
             console.log(e)
             dispatch(NewsActionCreators.setIsLoading(false));
