@@ -1,14 +1,11 @@
 import React, {Suspense, useEffect} from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import {routeConfig} from "../shared/config/routeConfig/routeConfig";
+import {routeConfig, RouteNames} from "../shared/config/routeConfig/routeConfig";
 import {ProfilePage} from "../pages/ProfilePage";
 import {ProtectedRoute} from "./ProtectedRoute";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
 import {IUser} from "../models/IUser";
-import {HomePage} from "../pages/HomePage";
-import {NewsPage} from "../pages/NewsPage";
-import {LoginPage} from "../pages/LoginPage";
 import HotFoundPage from "../pages/HotFoundPage/ui/HotFoundPage";
 
 const AppRouter = () => {
@@ -23,11 +20,11 @@ const AppRouter = () => {
         }
     }, [])
 
-    // useEffect(() => {
-    //     if (localStorage.getItem('auth')) {
-    //         navigate(RouteNames.PROFILE_LINK);
-    //     }
-    // }, [isAuth]);
+    useEffect(() => {
+        if (localStorage.getItem('auth')) {
+            navigate(RouteNames.PROFILE_LINK);
+        }
+    }, [isAuth]);
 
     return (
         <Routes>

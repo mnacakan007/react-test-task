@@ -19,12 +19,12 @@ const NewsPage: FC = () => {
         <>
             {isLoading && <div>Loading...</div>}
             <div className={styles.addNewsBlock}><AddNews /></div>
-            {data.length > 0 ?
+            {data.length > 0 &&
                 <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
-                    {data.map((newsItem: INews) => (
+                    {data.map((newsItem: INews ) => (
                         <SingleNewsPage key={newsItem.id} news={newsItem}/>
                     ))}
-                </Row> : <div className={styles.pageEmptyBlock}>No news</div>}
+                </Row>}
         </>
     );
 };

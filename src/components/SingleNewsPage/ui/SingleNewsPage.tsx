@@ -8,6 +8,7 @@ const { Meta } = Card;
 
 interface NewsListProps {
     news: INews;
+    key: string;
 }
 
 const SingleNewsPage: FC<NewsListProps> = ({ news }) => {
