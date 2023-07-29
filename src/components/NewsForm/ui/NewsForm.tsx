@@ -6,6 +6,7 @@ import {PlusOutlined} from '@ant-design/icons';
 
 const NewsForm: FC<NewsFormProps> = (props) => {
     const [form] = Form.useForm();
+    const [isUploading, setIsUploading] = useState(false);
     const [news, setNews] = useState<INews>({
         image: '',
         title: '',
@@ -14,7 +15,14 @@ const NewsForm: FC<NewsFormProps> = (props) => {
 
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-    const handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => {
+    const handleChange: UploadProps['onChange'] = ({fileList: newFileList, file}) => {
+        console.log(file.status);
+        if (file.status === 'uploading') {
+            setIsUploading(true);
+        }
+        if (file.status === 'error') {
+            setIsUploading(false);
+        }
         if (newFileList[0]?.thumbUrl) {
             setNews({ ...news, image: newFileList[0].thumbUrl});
             setFileList(newFileList);
@@ -93,7 +101,7 @@ const NewsForm: FC<NewsFormProps> = (props) => {
             </Form.Item>
             <Row justify="end">
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button disabled={isUploading} type="primary" htmlType="submit">
                         Create
                     </Button>
                 </Form.Item>
