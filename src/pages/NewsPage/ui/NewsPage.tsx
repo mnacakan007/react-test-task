@@ -58,8 +58,9 @@ const NewsPage: FC = () => {
             </Row>
 
             {isLoading && <div className={styles.loader}>Loading...</div>}
+            {!isLoading && !filteredItems.length && <div className={styles.empty}><h1>No news</h1></div>}
 
-            {<InfiniteScroll
+            {filteredItems.length > 0 && <InfiniteScroll
                 dataLength={filteredItems.length}
                 next={fetchData}
                 hasMore={true}
