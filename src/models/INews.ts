@@ -1,15 +1,15 @@
-export interface INews {
+export type INews = {
     id: string;
     image: string;
     title: string;
     description: string;
 }
 
-export interface NewsFormProps {
+export type NewsFormProps = {
     submit: (news: INews) => void
 }
 
-export interface NewsListProps {
+export type NewsListProps = {
     news: INews;
     key: string;
     nextFibonacciNumber: number;

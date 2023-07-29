@@ -11,21 +11,21 @@ export const AuthActionCreators = {
     login: (username: string, password: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(AuthActionCreators.setIsLoading(true));
-            setTimeout(async () => {
-                const response = await UserService.getUsers();
-                const mockUser = response.data.find(user => user.username === username && user.password === password);
-                if (mockUser) {
-                    localStorage.setItem('auth', 'true');
-                    localStorage.setItem('username', mockUser.username);
-                    localStorage.setItem('profile', JSON.stringify(mockUser));
 
-                    dispatch(AuthActionCreators.setUser(mockUser));
-                    dispatch(AuthActionCreators.setIsAuth(true));
-                } else {
-                    dispatch(AuthActionCreators.setError('Incorrect username or password'));
-                }
-                dispatch(AuthActionCreators.setIsLoading(false));
-            }, 1000)
+            const response = await UserService.getUsers();
+            const mockUser = response.data.find(user => user.username === username && user.password === password);
+
+            if (mockUser) {
+                localStorage.setItem('auth', 'true');
+                localStorage.setItem('username', mockUser.username);
+                localStorage.setItem('profile', JSON.stringify(mockUser));
+
+                dispatch(AuthActionCreators.setUser(mockUser));
+                dispatch(AuthActionCreators.setIsAuth(true));
+            } else {
+                dispatch(AuthActionCreators.setError('Incorrect username or password'));
+            }
+            dispatch(AuthActionCreators.setIsLoading(false));
         } catch (e) {
             dispatch(AuthActionCreators.setError('An error occurred while logging in'))
         }

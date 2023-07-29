@@ -10,16 +10,15 @@ export const ProfileActionCreators = {
     fetchProfile: () => async (dispatch: AppDispatch) => {
         try {
             dispatch(ProfileActionCreators.setIsLoading(true));
-            setTimeout(async () => {
-                const response = await ProfileService.getProfile();
-                const mockProfile = response.data;
 
-                if (mockProfile) {
-                    dispatch(ProfileActionCreators.setProfile(mockProfile));
-                }
+            const response = await ProfileService.getProfile();
+            const mockProfile = response.data;
 
-                dispatch(ProfileActionCreators.setIsLoading(false));
-            }, 3000)
+            if (mockProfile) {
+                dispatch(ProfileActionCreators.setProfile(mockProfile));
+            }
+
+            dispatch(ProfileActionCreators.setIsLoading(false));
         } catch (e) {
             console.log(e)
             dispatch(ProfileActionCreators.setIsLoading(false));
