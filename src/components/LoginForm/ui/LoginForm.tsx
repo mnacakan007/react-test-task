@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, memo, useState} from 'react';
 import {Button, Form, Input} from "antd";
 
 import {UserOutlined} from '@ant-design/icons';
@@ -56,4 +56,4 @@ const LoginForm: FC = () => {
     );
 };
 
-export default LoginForm;
+export default memo(LoginForm);

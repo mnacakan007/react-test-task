@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {Layout, Menu, Row} from "antd";
 import {useNavigate} from 'react-router-dom';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
@@ -6,7 +6,6 @@ import {useActions} from "../../../hooks/useActions";
 import {RouteNames} from "../../../shared/config/routeConfig/routeConfig";
 import Avatar from 'antd/es/avatar/avatar';
 import {UserOutlined} from "@ant-design/icons";
-import styles from './Navbar.module.scss';
 
 const Navbar: FC = () => {
     const navigate = useNavigate();
@@ -96,4 +95,4 @@ const Navbar: FC = () => {
     );
 };
 
-export default Navbar;
+export default memo(Navbar);

@@ -1,11 +1,8 @@
 import React, {FC, memo, useState} from 'react';
 import {Button, Form, Input, Row, Upload, UploadFile, UploadProps} from "antd";
 import {rules} from "../../../utils/rules";
-import {INews} from "../../../models/INews";
+import {INews, NewsFormProps} from "../../../models/INews";
 import {PlusOutlined} from '@ant-design/icons';
-interface NewsFormProps {
-    submit: (news: INews) => void
-}
 
 const NewsForm: FC<NewsFormProps> = (props) => {
     const [form] = Form.useForm();
@@ -38,12 +35,8 @@ const NewsForm: FC<NewsFormProps> = (props) => {
         return e?.fileList;
     };
 
-    const submitForm = ({
-        image,
-    }: {
-        image: UploadFile[],
-    }) => {
-        props.submit({...news, id: Date.now().toString(), image: image[0].thumbUrl})
+    const submitForm = ({ image }: { image: UploadFile[] }) => {
+        props.submit({...news, id: Date.now().toString(), image: image[0].thumbUrl as string })
         onReset();
     }
 

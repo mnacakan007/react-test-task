@@ -1,18 +1,18 @@
-import React, {FC} from "react";
-import {INews} from "../../../models/INews";
+import React, {FC, memo, useMemo} from "react";
+import {NewsListProps} from "../../../models/INews";
 import {Card, Col} from "antd";
 import {useActions} from "../../../hooks/useActions";
-import { DeleteOutlined } from '@ant-design/icons';
+import {DeleteOutlined} from '@ant-design/icons';
+import {isPrime} from "../../../utils/isPrime";
 
-const { Meta } = Card;
+const {Meta} = Card;
 
-interface NewsListProps {
-    news: INews;
-    key: string;
-}
-
-const SingleNewsPage: FC<NewsListProps> = ({ news }) => {
+const SingleNewsPage: FC<NewsListProps> = ({news, nextFibonacciNumber}) => {
     const {deleteNews} = useActions();
+
+    const isFibonacciPrime = useMemo(() => {
+        return isPrime(nextFibonacciNumber);
+    }, [nextFibonacciNumber]);
 
     return (
         <Col className="gutter-row" span={6}>
@@ -22,13 +22,15 @@ const SingleNewsPage: FC<NewsListProps> = ({ news }) => {
                 style={{marginBottom: '20px'}}
                 cover={<img alt="example" src={news.image} loading={"lazy"}/>}
                 actions={[
-                    <DeleteOutlined onClick={() => deleteNews(news.id)} key="delete" />,
+                    <DeleteOutlined onClick={() => deleteNews(news.id)} key="delete"/>,
                 ]}
             >
-                <Meta title={news.title} description={news.description} />
+                <Meta
+                    title={`${news.title} ${nextFibonacciNumber} - ${isFibonacciPrime ? 'prime' : 'not a prime'}`}
+                    description={news.description}/>
             </Card>
         </Col>
     )
 };
 
-export default SingleNewsPage;
+export default memo(SingleNewsPage);

@@ -1,30 +1,82 @@
-import React, {FC, useEffect} from 'react';
-import {useTypedSelector} from "../../../hooks/useTypedSelector";
-import {useActions} from "../../../hooks/useActions";
-import {Row} from "antd";
-import SingleNewsPage from "../../../components/SingleNewsPage/ui/SingleNewsPage";
-import {INews} from "../../../models/INews";
-import styles from "./NewsPage.module.scss";
-import AddNews from "../../../components/AddNews/ui/AddNews";
+import React, {ChangeEvent, FC, useEffect, useState, useMemo, useDeferredValue, useCallback} from 'react';
+import {Col, Row} from 'antd';
+import {useTypedSelector} from '../../../hooks/useTypedSelector';
+import {useActions} from '../../../hooks/useActions';
+import SingleNewsPage from '../../../components/SingleNewsPage/ui/SingleNewsPage';
+import {INews} from '../../../models/INews';
+import styles from './NewsPage.module.scss';
+import AddNews from '../../../components/AddNews/ui/AddNews';
+import {generateNextFibonacci} from "../../../utils/fibonacciNext";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+let n = 0
 
 const NewsPage: FC = () => {
-    const {isLoading, news: data} = useTypedSelector(state => state.news);
-    const {fetchNews} = useActions()
+    const {isLoading, news, currentPage, perPage} = useTypedSelector(state => state.news);
+    const [value, setValue] = useState('');
+    const defferedValue = useDeferredValue(value);
+    const {fetchNews} = useActions();
 
     useEffect(() => {
-        fetchNews();
+        fetchNews(currentPage, perPage);
     }, []);
+
+
+    const filteredItems = useMemo(() => {
+        if (value === '') {
+            return news;
+        } else {
+            return news.filter(item =>
+                item.title.toLowerCase().includes(value.toLowerCase()) ||
+                item.description.toLowerCase().includes(value.toLowerCase())
+            );
+        }
+    }, [news, defferedValue]);
+
+    const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+    };
+
+    const nextFibonacciNumber = useCallback((index: number) => {
+        return generateNextFibonacci(index + 1);
+    }, []);
+
+    const fetchData = () => {
+        fetchNews(currentPage + 1, perPage);
+    }
 
     return (
         <>
-            {isLoading && <div>Loading...</div>}
-            <div className={styles.addNewsBlock}><AddNews /></div>
-            {data.length > 0 &&
+            <Row>
+                <Col span={12}>
+                    <input style={{padding: '5px'}} type="text" placeholder="Search" value={value}
+                           onChange={onChangeValue}/>
+                </Col>
+                <Col span={12}>
+                    <div className={styles.addNewsBlock}><AddNews/></div>
+                </Col>
+            </Row>
+
+            {isLoading && <div className={styles.loader}>Loading...</div>}
+
+            {<InfiniteScroll
+                dataLength={filteredItems.length}
+                next={fetchData}
+                hasMore={true}
+                loader={''}
+                endMessage={<p>No more data to load.</p>}
+                style={{ overflow: 'hidden'}}
+            >
                 <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
-                    {data.map((newsItem: INews ) => (
-                        <SingleNewsPage key={newsItem.id} news={newsItem}/>
+                    {filteredItems.map((newsItem: INews, index: number) => (
+                        <SingleNewsPage
+                            key={newsItem.id}
+                            news={newsItem}
+                            nextFibonacciNumber={nextFibonacciNumber(index)}
+                        />
                     ))}
-                </Row>}
+                </Row>
+            </InfiniteScroll>}
         </>
     );
 };

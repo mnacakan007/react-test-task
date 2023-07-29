@@ -17,6 +17,8 @@ export const AuthActionCreators = {
                 if (mockUser) {
                     localStorage.setItem('auth', 'true');
                     localStorage.setItem('username', mockUser.username);
+                    localStorage.setItem('profile', JSON.stringify(mockUser));
+
                     dispatch(AuthActionCreators.setUser(mockUser));
                     dispatch(AuthActionCreators.setIsAuth(true));
                 } else {
@@ -33,5 +35,5 @@ export const AuthActionCreators = {
         localStorage.removeItem('username')
         dispatch(AuthActionCreators.setUser({} as IUser));
         dispatch(AuthActionCreators.setIsAuth(false))
-    }
+    },
 }

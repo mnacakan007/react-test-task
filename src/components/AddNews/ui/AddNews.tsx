@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, memo, useState} from 'react';
 import {Button, Layout, Modal, Row} from "antd";
 import NewsForm from "../../NewsForm/ui/NewsForm";
 import {useActions} from "../../../hooks/useActions";
@@ -36,4 +36,4 @@ const AddNews: FC = () => {
     );
 };
 
-export default AddNews;
+export default memo(AddNews);
