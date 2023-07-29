@@ -9,16 +9,14 @@ import AddNews from '../../../components/AddNews/ui/AddNews';
 import {generateNextFibonacci} from "../../../utils/fibonacciNext";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-let n = 0
-
 const NewsPage: FC = () => {
-    const {isLoading, news, currentPage, perPage} = useTypedSelector(state => state.news);
+    const {isLoading, news, currentPage, perPage, totalCount} = useTypedSelector(state => state.news);
     const [value, setValue] = useState('');
     const defferedValue = useDeferredValue(value);
     const {fetchNews} = useActions();
 
     useEffect(() => {
-        fetchNews(currentPage, perPage);
+        fetchNews();
     }, []);
 
 
@@ -49,8 +47,13 @@ const NewsPage: FC = () => {
         <>
             <Row>
                 <Col span={12}>
-                    <input style={{padding: '5px'}} type="text" placeholder="Search" value={value}
-                           onChange={onChangeValue}/>
+                    <input
+                        style={{padding: '5px'}}
+                        type="text"
+                        placeholder="Search"
+                        value={value}
+                        onChange={onChangeValue}
+                    />
                 </Col>
                 <Col span={12}>
                     <div className={styles.addNewsBlock}><AddNews/></div>
