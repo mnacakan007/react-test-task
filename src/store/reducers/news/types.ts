@@ -12,6 +12,7 @@ export enum NewsActionEnum {
     SET_NEWS = "SET_NEWS",
     SET_IS_LOADING = "SET_IS_LOADING",
     SET_CURRENT_PAGE = "SET_CURRENT_PAGE",
+    SET_PER_PAGE = "SET_PER_PAGE",
     SET_TOTAL_COUNT = "SET_TOTAL_COUNT",
 }
 
@@ -30,6 +31,11 @@ export interface SetCurrentPageAction {
     payload: number;
 }
 
+export interface SetPerPageAction {
+    type: NewsActionEnum.SET_PER_PAGE;
+    payload: number;
+}
+
 export interface SetTotalCountAction {
     type: NewsActionEnum.SET_TOTAL_COUNT;
     payload: number;
@@ -40,4 +46,5 @@ export type NewsAction =
     SetNewsAction |
     SetIsLoadingAction |
     SetCurrentPageAction |
+    SetPerPageAction |
     SetTotalCountAction

@@ -6,17 +6,17 @@ import SingleNewsPage from '../../../components/SingleNewsPage/ui/SingleNewsPage
 import {INews} from '../../../models/INews';
 import styles from './NewsPage.module.scss';
 import AddNews from '../../../components/AddNews/ui/AddNews';
-import {generateNextFibonacci} from "../../../utils/fibonacciNext";
+import {generateNextFibonacci} from "../../../utils/generateNextFibonacci";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const NewsPage: FC = () => {
-    const {isLoading, news, currentPage, perPage, totalCount} = useTypedSelector(state => state.news);
+    const {isLoading, news, currentPage, perPage} = useTypedSelector(state => state.news);
     const [value, setValue] = useState('');
     const defferedValue = useDeferredValue(value);
     const {fetchNews} = useActions();
 
     useEffect(() => {
-        fetchNews();
+        fetchNews(1, 10);
     }, []);
 
 
@@ -60,8 +60,8 @@ const NewsPage: FC = () => {
                 </Col>
             </Row>
 
-            {isLoading && <div className={styles.loader}>Loading...</div>}
-            {!isLoading && !filteredItems.length && <div className={styles.empty}><h1>No news</h1></div>}
+            {isLoading && <div className='loader'>Loading...</div>}
+            {!isLoading && !filteredItems.length && <div className='empty'><h1>No news</h1></div>}
 
             {filteredItems.length > 0 && <InfiniteScroll
                 dataLength={filteredItems.length}
@@ -74,7 +74,7 @@ const NewsPage: FC = () => {
                 <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
                     {filteredItems.map((newsItem: INews, index: number) => (
                         <SingleNewsPage
-                            key={newsItem.id}
+                            key={`${newsItem.id}-${index}`}
                             news={newsItem}
                             nextFibonacciNumber={nextFibonacciNumber(index)}
                         />

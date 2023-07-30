@@ -5,29 +5,39 @@ import {UserOutlined} from '@ant-design/icons';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useActions} from "../../../hooks/useActions";
 import {rules} from "../../../utils/rules";
-
+import {generateAuthToken, sha256} from "../../../utils/sha256";
 
 const LoginForm: FC = () => {
     const {error, isLoading} = useTypedSelector(state => state.auth);
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const {login} = useActions()
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const {login, setError} = useActions();
 
-    const submit = () => {
-        login(username, password)
-    }
+    const handleLogin = async (): Promise<void> => {
+        const passwordHash = await sha256(password);
+        const authToken = await generateAuthToken(username, passwordHash);
+        const storedAuthToken = localStorage.getItem('authToken');
+
+        if (authToken === storedAuthToken) {
+            login(username, password);
+        } else {
+            setError('Login failed. Invalid credentials.');
+        }
+
+        setPassword('');
+    };
 
     return (
         <Form
             style={{minWidth: '300px'}}
-            onFinish={submit}
+            onFinish={handleLogin}
         >
-            {error && <div style={{color: 'red'}}>
+            {error && <div style={{color: 'red', marginBottom: 5}}>
                 {error}
             </div>}
             <Form.Item
                 name="username"
-                rules={[rules.required("Please enter your username!")]}
+                rules={[rules.required("Please enter your username!"), rules.isEmptySpaces()]}
             >
                 <Input
                     value={username}
@@ -38,7 +48,7 @@ const LoginForm: FC = () => {
             </Form.Item>
             <Form.Item
                 name="password"
-                rules={[rules.required("Please enter password")]}
+                rules={[rules.required("Please enter password"), rules.isEmptySpaces()]}
             >
                 <Input.Password
                     size="large"

@@ -16,6 +16,8 @@ export default function EventReducer(state = initialState, action: NewsAction): 
             return {...state, isLoading: action.payload}
         case NewsActionEnum.SET_CURRENT_PAGE:
             return {...state, currentPage: action.payload}
+        case NewsActionEnum.SET_PER_PAGE:
+            return {...state, perPage: action.payload}
         case NewsActionEnum.SET_TOTAL_COUNT:
             return {...state, totalCount: action.payload}
         default:

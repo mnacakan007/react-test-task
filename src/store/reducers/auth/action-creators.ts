@@ -18,12 +18,11 @@ export const AuthActionCreators = {
             if (mockUser) {
                 localStorage.setItem('auth', 'true');
                 localStorage.setItem('username', mockUser.username);
-                localStorage.setItem('profile', JSON.stringify(mockUser));
 
                 dispatch(AuthActionCreators.setUser(mockUser));
                 dispatch(AuthActionCreators.setIsAuth(true));
             } else {
-                dispatch(AuthActionCreators.setError('Incorrect username or password'));
+                dispatch(AuthActionCreators.setError('Login failed. Invalid credentials.'));
             }
             dispatch(AuthActionCreators.setIsLoading(false));
         } catch (e) {

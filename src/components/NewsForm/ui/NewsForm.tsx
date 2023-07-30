@@ -64,7 +64,7 @@ const NewsForm: FC<NewsFormProps> = (props) => {
             <Form.Item
                 label="Title"
                 name="title"
-                rules={[rules.required()]}
+                rules={[rules.required(), rules.isEmptySpaces()]}
             >
                 <Input
                     onChange={e => setNews({...news, title: e.target.value.trim()})}
@@ -74,7 +74,7 @@ const NewsForm: FC<NewsFormProps> = (props) => {
             <Form.Item
                 label="Description"
                 name="description"
-                rules={[rules.required()]}
+                rules={[rules.required(), rules.isEmptySpaces()]}
             >
                 <Input
                     onChange={e => setNews({...news, description: e.target.value.trim()})}

@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {INews} from "../models/INews";
 
 export default class NewsService {
-    static async getNews(currentPage = 1, perPage = 10): Promise<AxiosResponse<INews[]>> {
+    static async getNews(currentPage: number, perPage: number): Promise<AxiosResponse<INews[]>> {
         return axios.get<INews[]>(`/news?_page=${currentPage}&_limit=${perPage}`);
     }
 
