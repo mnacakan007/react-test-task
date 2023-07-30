@@ -8,12 +8,10 @@ import {generateNextFibonacci} from "../../../utils/generateNextFibonacci";
 
 const HomePage = () => {
     const {isLoading, news} = useTypedSelector(state => state.news);
-    const {fetchNews, setNews} = useActions();
+    const {fetchNews} = useActions();
 
     useEffect(() => {
-        if (news.length > 4) {
-            setNews(news.slice(0, 4));
-        } else {
+        if (!news.length) {
             fetchNews(1, 4);
         }
     }, []);
@@ -30,7 +28,7 @@ const HomePage = () => {
             {!isLoading && !news.length && <div className='empty'><h1>No news</h1></div>}
 
             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
-                {news.map((newsItem: INews, index: number) => (
+                {news.slice(0, 4).map((newsItem: INews, index: number) => (
                     <SingleNewsPage
                         key={`${newsItem.id}-${index}`}
                         news={newsItem}

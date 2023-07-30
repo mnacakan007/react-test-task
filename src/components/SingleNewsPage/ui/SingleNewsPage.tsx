@@ -15,7 +15,7 @@ const SingleNewsPage: FC<NewsListProps> = ({news, nextFibonacciNumber}) => {
     }, [nextFibonacciNumber]);
 
     return (
-        <Col className="gutter-row" span={6}>
+        <Col className="gutter-row" span={24} sm={12} md={6}>
             <Card
                 key={news.id}
                 hoverable
