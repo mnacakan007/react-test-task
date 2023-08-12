@@ -3,9 +3,10 @@ import {Routes, Route} from 'react-router-dom';
 import {routeConfig} from "../../shared/config/routeConfig/routeConfig";
 import {ProfilePage} from "../../pages/ProfilePage";
 import {ProtectedRoute} from "../../components/ProtectedRoute";
+import {HotFoundPage} from '../../pages/HotFoundPage';
 import {useActions} from "../../hooks/useActions";
 import {IUser} from "../../models/IUser";
-import HotFoundPage from "../../pages/HotFoundPage/ui/HotFoundPage";
+
 
 const AppRouter = () => {
     const {setUser, setIsAuth} = useActions();
